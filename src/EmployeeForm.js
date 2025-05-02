@@ -137,13 +137,38 @@ const FormikApp = withFormik({
     return { username, password }
   },
   handleSubmit(values, { props, resetForm, setErrors, setSubmitting }) {
-    fetch('/employee/create', {
+      const payload = {
+	      id: values.id,
+	      name: values.name,
+	      address: values.address,
+	      email: values.email,
+	      phone_number: values.phone_number,
+	      status: values.status,
+	      joining_date: values.joining_date,
+	      office_location: values.location,
+	      designation: values.job_role,
+	      department: values.job_role
+      }
+      const payload2 = {
+	      id: values.id,
+	      processDate: values.joining_date,
+	      name: values.name,
+	      salary: values.annual_package,
+	      status: values.status
+      }
+      fetch('/api/v1/employee/create', {
       method: 'POST',
-      body: JSON.stringify(values),
+      body: JSON.stringify(payload),
       headers: {
           'Content-Type': 'application/json'
     }})
-    fetch('/notification/send', {
+     fetch('/api/v1/salary/create/record', {
+      method: 'POST',
+      body: JSON.stringify(payload2),
+      headers: {
+          'Content-Type': 'application/json'
+    }})
+    fetch('/api/v1/notification/send', {
       method: 'POST',
       body: JSON.stringify(values),
       headers: {

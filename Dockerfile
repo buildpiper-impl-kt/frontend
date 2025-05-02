@@ -1,8 +1,8 @@
 FROM node:16.15.1
 
-WORKDIR /app/
-
 COPY . /app
+
+WORKDIR /app/
 
 RUN apt-get update -y && \
     apt-get install git -y

@@ -2,26 +2,22 @@ import react, * as React from "react";
 import { Page, Grid, Table, Button } from "tabler-react";
 import SiteWrapper from "./SiteWrapper.react";
 //import { withTransaction } from '@elastic/apm-rum-react';
-
 class ListEmployee extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = { data: [] }
-	}
-	
-	loadData() {
-		fetch('/attendance/search')
-			.then(response => response.json())
-			.then(data => {
-				this.setState({data: data })
-		})
-			.catch(err => console.error(this.props.url, err.toString()))
-	}
-
-	componentDidMount() {
-		this.loadData()
-	}
-	
+        constructor(props) {
+                super(props)
+                this.state = { data: [] }
+        }
+        loadData() {
+                fetch('/api/v1/attendance/search/all')
+                        .then(response => response.json())
+                        .then(data => {
+                                this.setState({data: data })
+                })
+                        .catch(err => console.error(this.props.url, err.toString()))
+        }
+        componentDidMount() {
+                this.loadData()
+        }
   render() {
       return (
           <SiteWrapper>
@@ -42,9 +38,9 @@ class ListEmployee extends React.Component {
                         <Table.Col>{item.id}</Table.Col>
                         <Table.Col>{item.status}</Table.Col>
                         <Table.Col>{item.date}</Table.Col>
-                    </Table.Row>  
+                    </Table.Row>
                 );
-                })  
+                })
             }
             </Table.Body>
             </Table>
@@ -53,6 +49,5 @@ class ListEmployee extends React.Component {
       );
   }
 }
-
 export default ListEmployee
 //export default withTransaction('ListEmployee', 'component')(ListEmployee)
