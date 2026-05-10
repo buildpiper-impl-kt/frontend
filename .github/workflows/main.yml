@@ -36,3 +36,8 @@ jobs:
         run: |
           docker push ${{ secrets.DOCKER_AAYU_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
           docker push ${{ secrets.DOCKER_AAYU_NAME }}/${{ env.IMAGE_NAME }}:latest
+          
+      - name: print env
+        run: |
+          env
+          
