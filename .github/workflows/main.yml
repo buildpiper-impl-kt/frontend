@@ -59,7 +59,7 @@ jobs:
 
 
       - name: Run Trivy Scan
-        uses: aquasecurity/trivy-action@0.33.1
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: ${{ secrets.DOCKER_AAYU_NAME }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_RUN_NUMBER }}
           format: table
