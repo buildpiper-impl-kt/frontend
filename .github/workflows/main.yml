@@ -122,7 +122,7 @@ jobs:
              fi
           else
                   echo "Number of layers in docker image is  under expected layers count"
-                  logInfoMessage "build sucessfull"
+                  echo "build sucessfull"
           fi
 
       - name: Push Docker Image
