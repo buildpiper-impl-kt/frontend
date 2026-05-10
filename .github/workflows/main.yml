@@ -1,4 +1,4 @@
-name: Build Docker Image
+name: Frontend Build Docker Image
 
 on:
   push:
@@ -28,11 +28,11 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }} .
-          docker tag ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }} \
-                     ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+          docker build -t ${{ secrets.DOCKER_AAYU_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }} .
+          docker tag ${{ secrets.DOCKER_AAYU_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }} \
+                     ${{ secrets.DOCKER_AAYU_NAME }}/${{ env.IMAGE_NAME }}:latest
 
       - name: Push Docker Image
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-          docker push ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+          docker push ${{ secrets.DOCKER_AAYU_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_AAYU_NAME }}/${{ env.IMAGE_NAME }}:latest
