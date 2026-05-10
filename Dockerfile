@@ -4,8 +4,8 @@ COPY . /app
 
 WORKDIR /app/
 
-RUN apt-get update -y && \
-    apt-get install git -y
+#RUN apt-get update -y && \
+#    apt-get install git -y
 
 RUN npm install 
 
