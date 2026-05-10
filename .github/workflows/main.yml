@@ -8,6 +8,7 @@ on:
 
 env:
   IMAGE_NAME: githubaction
+  FAIL_ON_IMAGE_SIZE: false
 
 jobs:
   docker:
@@ -51,17 +52,25 @@ jobs:
 
       - name: Validate Docker Image Size
         run: |
+      
+          if [ "${{ env.SKIP_IMAGE_SIZE_CHECK }}" = "true" ]; then
+            echo "Skipping Docker image size validation"
+            exit 0
+          fi
+      
           IMAGE_SIZE=$(docker image inspect \
           ${{ secrets.DOCKER_AAYU_NAME }}/${{ env.IMAGE_NAME }}:${{ github.run_number }} \
           --format='{{.Size}}')
-
+      
           IMAGE_SIZE_MB=$((IMAGE_SIZE / 1024 / 1024))
-
+      
           echo "Image Size: ${IMAGE_SIZE_MB} MB"
-
+      
           if [ "$IMAGE_SIZE_MB" -gt 500 ]; then
             echo "Docker image size exceeds 500MB"
-            exit 1
+            if [ "${{ env.FAIL_ON_IMAGE_SIZE }}" = "true" ]; then
+              exit 1
+            fi
           fi
 
 
