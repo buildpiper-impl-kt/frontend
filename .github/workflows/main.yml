@@ -45,14 +45,14 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKER_AAYU_NAME }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_RUN_NUMBER }} .
-          docker tag ${{ secrets.DOCKER_AAYU_NAME }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_RUN_NUMBER }} \
+          docker build -t ${{ secrets.DOCKER_AAYU_NAME }}/${{ env.IMAGE_NAME }}:${{ github.run_number }} .
+          docker tag ${{ secrets.DOCKER_AAYU_NAME }}/${{ env.IMAGE_NAME }}:${{ github.run_number }} \
                      ${{ secrets.DOCKER_AAYU_NAME }}/${{ env.IMAGE_NAME }}:latest
 
       - name: Validate Docker Image Size
         run: |
           IMAGE_SIZE=$(docker image inspect \
-          ${{ secrets.DOCKER_AAYU_NAME }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_RUN_NUMBER }} \
+          ${{ secrets.DOCKER_AAYU_NAME }}/${{ env.IMAGE_NAME }}:${{ github.run_number }} \
           --format='{{.Size}}')
 
           IMAGE_SIZE_MB=$((IMAGE_SIZE / 1024 / 1024))
@@ -68,7 +68,7 @@ jobs:
       - name: Run Trivy Scan
         uses: aquasecurity/trivy-action@v0.36.0
         with:
-          image-ref: ${{ secrets.DOCKER_AAYU_NAME }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_RUN_NUMBER }}
+          image-ref: ${{ secrets.DOCKER_AAYU_NAME }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}
           format: table
           exit-code: 1
           ignore-unfixed: true
@@ -77,11 +77,11 @@ jobs:
 
 
       - name: Show Docker Layers
-        run: docker history ${{ secrets.DOCKER_AAYU_NAME }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_RUN_NUMBER }}
+        run: docker history ${{ secrets.DOCKER_AAYU_NAME }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}
 
       - name: Push Docker Image
         run: |
-          docker push ${{ secrets.DOCKER_AAYU_NAME }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_RUN_NUMBER }}
+          docker push ${{ secrets.DOCKER_AAYU_NAME }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}
           docker push ${{ secrets.DOCKER_AAYU_NAME }}/${{ env.IMAGE_NAME }}:latest
           
           
